@@ -1,21 +1,50 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env node
 
-cd "$(dirname "$0")/.."
+import { execSync } from 'node:child_process';
+import { cpSync, mkdirSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-year=$(date +%Y)
+import sharp from 'sharp';
+import pngToIco from 'png-to-ico';
 
-mkdir -p dist old
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = join(__dirname, '..');
 
-# Generate HTML
-node tsv-to-html.mjs > dist/index.html
+process.chdir(root);
 
-# Copy assets
-cp assets/bbgpbg.css dist/
-cp assets/bbgpbg.js dist/
-cp assets/favicon.ico dist/
+const year = new Date().getFullYear();
 
-# Archive for posterity
-cp dist/index.html "old/index-${year}.html"
+// Ensure directories exist
+mkdirSync('dist', { recursive: true });
+mkdirSync('old', { recursive: true });
 
-echo "Built dist/index.html and archived to old/index-${year}.html"
+// Generate HTML from Google Sheets data
+console.log('Generating HTML...');
+const html = execSync('node tsv-to-html.mjs', { encoding: 'utf-8' });
+writeFileSync('dist/index.html', html);
+
+// Generate favicon.ico from SVG
+console.log('Generating favicon.ico from SVG...');
+const sizes = [16, 32, 48, 64, 128, 256];
+const pngBuffers = await Promise.all(
+  sizes.map(size =>
+    sharp(join('assets', 'favicon.svg'))
+      .resize(size, size)
+      .png()
+      .toBuffer()
+  )
+);
+const icoBuffer = await pngToIco(pngBuffers);
+writeFileSync(join('dist', 'favicon.ico'), icoBuffer);
+
+// Copy other assets
+console.log('Copying assets...');
+cpSync(join('assets', 'bbgpbg.css'), join('dist', 'bbgpbg.css'));
+cpSync(join('assets', 'bbgpbg.js'), join('dist', 'bbgpbg.js'));
+cpSync(join('assets', 'favicon.svg'), join('dist', 'favicon.svg'));
+
+// Archive for posterity
+cpSync(join('dist', 'index.html'), join('old', `index-${year}.html`));
+
+console.log(`Built dist/ and archived to old/index-${year}.html`);
