@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BBGPBG Color Scheme Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #fff;
+      color: #222;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 { text-align: center; margin-bottom: 0.5rem; }
+    .subtitle { text-align: center; color: #666; margin-bottom: 2rem; }
+
+    .team-selection {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+    }
+    .conference {
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .conference h2 {
+      margin: 0 0 1rem 0;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    .conference.afc h2 { color: #C60C30; }
+    .conference.nfc h2 { color: #003594; }
+
+    .team-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .team-checkbox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      padding: 0.75rem 0.5rem;
+      border-radius: 8px;
+      background: #fff;
+      border: 2px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .team-checkbox:hover { border-color: #ccc; }
+    .team-checkbox.selected { border-color: #333; }
+    .team-checkbox input { display: none; }
+    .team-checkbox label {
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+    }
+    .team-checkbox .swatches {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .team-checkbox .swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .scheme {
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .scheme h3 {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.95rem;
+    }
+    .scheme p {
+      margin: 0 0 0.75rem 0;
+      font-size: 0.75rem;
+      color: #666;
+    }
+    .scheme svg {
+      width: 80px;
+      height: auto;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+    }
+    .colors {
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 0.75rem;
+    }
+    .colors .swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 2px solid rgba(0,0,0,0.1);
+    }
+    .scheme .export {
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      font-family: monospace;
+      color: #888;
+      background: #e8e8e8;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .scheme .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .scheme button {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 0.35rem 0.6rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .scheme button:hover {
+      background: #e5e5e5;
+    }
+    .copied-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .copied-toast.show { opacity: 1; }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: #999;
+      padding: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🏈 BBGPBG Color Scheme Generator</h1>
+  <p class="subtitle">Select remaining teams in each conference</p>
+
+  <div class="team-selection">
+    <div class="conference afc">
+      <h2>AFC</h2>
+      <div class="team-list" id="afc-teams"></div>
+    </div>
+    <div class="conference nfc">
+      <h2>NFC</h2>
+      <div class="team-list" id="nfc-teams"></div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="copied-toast" id="toast">Copied to clipboard!</div>
+
+  <script>
+    const teams = {
+      // AFC East
+      bills: { name: "Bills", conference: "afc", colors: { blue: "#00338D", red: "#C60C30" } },
+      dolphins: { name: "Dolphins", conference: "afc", colors: { aqua: "#008E97", orange: "#FC4C02" } },
+      patriots: { name: "Patriots", conference: "afc", colors: { navy: "#002244", red: "#C60C30", silver: "#B0B7BC" } },
+      jets: { name: "Jets", conference: "afc", colors: { green: "#125740", white: "#FFFFFF" } },
+
+      // AFC North
+      ravens: { name: "Ravens", conference: "afc", colors: { purple: "#241773", gold: "#9E7C0C" } },
+      bengals: { name: "Bengals", conference: "afc", colors: { orange: "#FB4F14", black: "#000000" } },
+      browns: { name: "Browns", conference: "afc", colors: { brown: "#311D00", orange: "#FF3C00" } },
+      steelers: { name: "Steelers", conference: "afc", colors: { gold: "#FFB612", black: "#101820" } },
+
+      // AFC South
+      texans: { name: "Texans", conference: "afc", colors: { navy: "#03202F", red: "#A71930" } },
+      colts: { name: "Colts", conference: "afc", colors: { blue: "#002C5F", white: "#FFFFFF" } },
+      jaguars: { name: "Jaguars", conference: "afc", colors: { teal: "#006778", gold: "#D7A22A" } },
+      titans: { name: "Titans", conference: "afc", colors: { navy: "#0C2340", blue: "#4B92DB", red: "#C8102E" } },
+
+      // AFC West
+      broncos: { name: "Broncos", conference: "afc", colors: { orange: "#FB4F14", navy: "#002244" } },
+      chiefs: { name: "Chiefs", conference: "afc", colors: { red: "#E31837", gold: "#FFB81C" } },
+      raiders: { name: "Raiders", conference: "afc", colors: { silver: "#A5ACAF", black: "#000000" } },
+      chargers: { name: "Chargers", conference: "afc", colors: { blue: "#0080C6", gold: "#FFC20E" } },
+
+      // NFC East
+      cowboys: { name: "Cowboys", conference: "nfc", colors: { navy: "#041E42", silver: "#869397", blue: "#7F9695" } },
+      giants: { name: "Giants", conference: "nfc", colors: { blue: "#0B2265", red: "#A71930" } },
+      eagles: { name: "Eagles", conference: "nfc", colors: { green: "#004C54", silver: "#A5ACAF" } },
+      commanders: { name: "Commanders", conference: "nfc", colors: { burgundy: "#5A1414", gold: "#FFB612" } },
+
+      // NFC North
+      bears: { name: "Bears", conference: "nfc", colors: { navy: "#0B162A", orange: "#C83803" } },
+      lions: { name: "Lions", conference: "nfc", colors: { blue: "#0076B6", silver: "#B0B7BC" } },
+      packers: { name: "Packers", conference: "nfc", colors: { green: "#203731", gold: "#FFB612" } },
+      vikings: { name: "Vikings", conference: "nfc", colors: { purple: "#4F2683", gold: "#FFC62F" } },
+
+      // NFC South
+      falcons: { name: "Falcons", conference: "nfc", colors: { red: "#A71930", black: "#000000" } },
+      panthers: { name: "Panthers", conference: "nfc", colors: { blue: "#0085CA", black: "#101820", silver: "#BFC0BF" } },
+      saints: { name: "Saints", conference: "nfc", colors: { gold: "#D3BC8D", black: "#101820" } },
+      buccaneers: { name: "Buccaneers", conference: "nfc", colors: { red: "#D50A0A", pewter: "#B1BABF" } },
+
+      // NFC West
+      cardinals: { name: "Cardinals", conference: "nfc", colors: { red: "#97233F", white: "#FFFFFF" } },
+      rams: { name: "Rams", conference: "nfc", colors: { blue: "#003594", gold: "#FFD100" } },
+      niners: { name: "49ers", conference: "nfc", colors: { red: "#AA0000", gold: "#B3995D" } },
+      seahawks: { name: "Seahawks", conference: "nfc", colors: { navy: "#002244", green: "#69BE28", grey: "#A5ACAF" } }
+    };
+
+    // Default selections (edit these or use the UI)
+    const defaultAfc = ["broncos", "patriots"];
+    const defaultNfc = ["seahawks", "rams"];
+
+    function createSvg(left, bg, right) {
+      return `
+        <svg viewBox="0 0 251 289" xmlns="http://www.w3.org/2000/svg">
+          <rect fill="${bg}" width="251" height="289" rx="14.6" ry="14.6"/>
+          <path fill="${left}" d="M143.96,97.74s-6.78,10.44-8.76,18.07c0,0-6.77,11.57-11.57,17.79,0,0-49.42,32.18-58.45,45.17,0,0-17.79,5.65-22.31,8.75-4.51,3.11-7.34,8.19-9.31,9.04-1.98.85-33.56,20.33-33.56,20.33V14.72C0,6.59,6.59,0,14.72,0h117.38l2.17,17.9c-6.84,4.12-11.81,10.93-11.81,16.87,0,6.77,6.47,10.03,14.8,7.77l6.7,55.2Z"/>
+          <path fill="${right}" d="M251,14.38v260.24c0,7.94-6.44,14.38-14.38,14.38H26.21s30.5-27.22,34.17-30.6c3.67-3.39,5.36-.29,7.62,1.69,2.26,1.98,23.16,4.52,27.11,5.08,3.95.57,18.35,3.39,22.87,6.5,4.52,3.1,24.56,1.97,27.95,1.69,3.39-.28,7.91-9.32,9.06-12.14,1.15-2.82-3.31-5.11-2-5.65,1.61-.66,8.54,2.49,14.4-5.65,6.07-8.42,2.26-9.88.57-11.29-1.7-1.41-3.78-3.12,1.97-3.67,6.69-.64,8.75-9.6,9.8-14.12,1.04-4.52-4.43-7.06-6.41-9.6-1.98-2.54,3.39-.56,5.93-8.47,2.54-7.9-3.21-15.99-9.88-19.2-4.89-2.36-32.76-12.7-36.71-13.55-3.95-.85-2.26-3.95-1.69-6.5.56-2.54,10.16-13.83,15.02-21.45,4.85-7.63,10.39-17.51,9.93-28.8-.45-11.3-6.88-15.25-6.88-15.25l-7.56-57.03c8.16-3.81,14.44-11.59,14.44-18.27,0-7.29-7.49-10.5-16.73-7.17-.35.12-.69.26-1.03.4l-2.11-15.95h100.57c7.94,0,14.38,6.44,14.38,14.38Z"/>
+        </svg>
+      `;
+    }
+
+    function createSwatch(color) {
+      return `<div class="swatch" style="background: ${color}"></div>`;
+    }
+
+    function renderTeamCheckboxes() {
+      const afcContainer = document.getElementById('afc-teams');
+      const nfcContainer = document.getElementById('nfc-teams');
+
+      Object.entries(teams).forEach(([id, team]) => {
+        const container = team.conference === 'afc' ? afcContainer : nfcContainer;
+        const checked = (team.conference === 'afc' ? defaultAfc : defaultNfc).includes(id);
+        const swatches = Object.values(team.colors).map(c => `<div class="swatch" style="background: ${c}"></div>`).join('');
+
+        const div = document.createElement('div');
+        div.className = 'team-checkbox' + (checked ? ' selected' : '');
+        div.innerHTML = `
+          <input type="checkbox" id="${id}" data-conference="${team.conference}" ${checked ? 'checked' : ''}>
+          <label for="${id}">${team.name}</label>
+          <div class="swatches">${swatches}</div>
+        `;
+        div.addEventListener('click', () => {
+          const input = div.querySelector('input');
+          input.checked = !input.checked;
+          div.classList.toggle('selected', input.checked);
+          renderSchemes();
+        });
+        container.appendChild(div);
+      });
+    }
+
+    function getSelectedTeams() {
+      const afc = [];
+      const nfc = [];
+
+      document.querySelectorAll('.team-checkbox input:checked').forEach(input => {
+        if (input.dataset.conference === 'afc') {
+          afc.push(input.id);
+        } else {
+          nfc.push(input.id);
+        }
+      });
+
+      return { afc, nfc };
+    }
+
+    function renderSchemes() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+
+      const { afc, nfc } = getSelectedTeams();
+
+      if (afc.length === 0 || nfc.length === 0) {
+        grid.innerHTML = '<div class="empty-state">Select at least one team from each conference</div>';
+        return;
+      }
+
+      const schemes = [];
+
+      afc.forEach(afcId => {
+        const afcTeam = teams[afcId];
+        nfc.forEach(nfcId => {
+          const nfcTeam = teams[nfcId];
+
+          Object.entries(afcTeam.colors).forEach(([afcColorName, afcColor]) => {
+            Object.entries(nfcTeam.colors).forEach(([nfcColorName, nfcColor]) => {
+              schemes.push({
+                leftTeam: afcTeam.name,
+                rightTeam: nfcTeam.name,
+                leftColorName: afcColorName,
+                rightColorName: nfcColorName,
+                left: afcColor,
+                bg: "#FFFFFF",
+                right: nfcColor
+              });
+            });
+          });
+        });
+      });
+
+      schemes.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'scheme';
+        let swapped = false;
+
+        const render = () => {
+          const leftTeam = swapped ? s.rightTeam : s.leftTeam;
+          const rightTeam = swapped ? s.leftTeam : s.rightTeam;
+          const left = swapped ? s.right : s.left;
+          const right = swapped ? s.left : s.right;
+          const leftColorName = swapped ? s.rightColorName : s.leftColorName;
+          const rightColorName = swapped ? s.leftColorName : s.rightColorName;
+          const exportStr = `${left} / ${right} / ${s.bg}`;
+
+          card.innerHTML = `
+            <h3>${leftTeam} vs. ${rightTeam}</h3>
+            <p>${leftColorName} / ${rightColorName}</p>
+            ${createSvg(left, s.bg, right)}
+            <div class="colors">
+              ${createSwatch(left)}
+              ${createSwatch(s.bg)}
+              ${createSwatch(right)}
+            </div>
+            <div class="export">${exportStr}</div>
+            <div class="buttons">
+              <button class="flip-btn">Flip</button>
+              <button class="copy-btn">Copy</button>
+            </div>
+          `;
+
+          card.querySelector('.flip-btn').addEventListener('click', () => {
+            swapped = !swapped;
+            render();
+          });
+
+          card.querySelector('.copy-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(exportStr);
+            showToast();
+          });
+        };
+
+        render();
+        grid.appendChild(card);
+      });
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    renderTeamCheckboxes();
+    renderSchemes();
+  </script>
+</body>
+</html>

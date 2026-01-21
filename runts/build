@@ -43,6 +43,7 @@ console.log('Copying assets...');
 cpSync(join('assets', 'bbgpbg.css'), join('dist', 'bbgpbg.css'));
 cpSync(join('assets', 'bbgpbg.js'), join('dist', 'bbgpbg.js'));
 cpSync(join('assets', 'favicon.svg'), join('dist', 'favicon.svg'));
+cpSync(join('assets', 'color-schemes.html'), join('dist', 'color-schemes.html'));
 
 // Archive for posterity
 cpSync(join('dist', 'index.html'), join('old', `index-${year}.html`));
