@@ -3,15 +3,21 @@ import pug from 'pug';
 import superagent from 'superagent';
 
 const sheetId = '1NHKaDTNrBk1wmcVqlZhl_catsk2UXyyDHrH6Q1K11OM';
+const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
+
+if (!apiKey) {
+  console.error('Error: GOOGLE_SHEETS_API_KEY environment variable is not set');
+  process.exit(1);
+}
 
 let glossaryFields = await superagent
   .get(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Glossary`)
-  .query({ alt: 'json', key: 'AIzaSyAVeMX_WzsCLo7alFRT93ruFZVjSRRIrbg' })
+  .query({ alt: 'json', key: apiKey })
   .then((response) => response.body.values);
 
 let propFields = await superagent
   .get(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Props`)
-  .query({ alt: 'json', key: 'AIzaSyAVeMX_WzsCLo7alFRT93ruFZVjSRRIrbg' })
+  .query({ alt: 'json', key: apiKey })
   .then((response) => response.body.values);
 
 const groupedProps =
