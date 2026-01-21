@@ -1,0 +1,55 @@
+doctype html
+html
+  head
+    title The Big "Big Game" Prop Bets Game &raquo; Coinflipper
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    script(src="bbgpbg.js" defer)
+    link(href="bbgpbg.css" type="text/css" rel="stylesheet")
+    link(href="favicon.ico" rel="icon")
+
+  body
+    dialog
+      h1 Error
+      p.description
+      button.close-modal Close
+
+    h1 The Big "Big Game" Prop Bets Game 2025
+
+    select.who-are-you
+      option(selected value="--") Who are you?
+      each propSet in groupedProps
+        option(value=propSet.proposer) #{propSet.proposer}
+
+    each propSet, i in groupedProps
+      details
+        summary #{propSet.proposer}'s Props
+
+        each prop, j in propSet.props
+          fieldset
+            legend #{prop.proposal}
+
+            section
+              input(type="radio" id=`${propSet.proposerId}-${j}-0` name=`${propSet.proposerId}-${j}` value=prop.sides[0] data-proposer=propSet.proposer data-proposal=prop.proposal)
+              label(for=`${propSet.proposerId}-${j}-0`) #{prop.sides[0]}
+              br
+
+              input(type="radio" id=`${propSet.proposerId}-${j}-1` name=`${propSet.proposerId}-${j}` value=prop.sides[1] data-proposer=propSet.proposer data-proposal=prop.proposal)
+              label(for=`${propSet.proposerId}-${j}-1`) #{prop.sides[1]}
+              br
+
+              input(type="radio" id=`${propSet.proposerId}-${j}-2` name=`${propSet.proposerId}-${j}` value="X" checked="checked" data-proposer=propSet.proposer data-proposal=prop.proposal)
+              label(for=`${propSet.proposerId}-${j}-2`) Decline to pick this prop
+
+            if prop.notes
+              p !{prop.notes}
+
+            if prop.pushable
+              p #{prop.pushable}
+
+            each glossaryReference in prop.glossaryReferences
+              dl
+                dt #{glossaryReference}
+                dd !{glossary[glossaryReference]}
+
+    button.validate-and-copy Validate and Copy to Clipboard
+    //button.debug DEBUG MAKE PICKS

@@ -1,0 +1,60 @@
+Adam	How many distinct digits will be represented by all touchdown scorers' jersey numbers?	8 or more	7 or fewer		For instance, if Kelce (87), Kittle (85), and McCaffrey (23) all score touchdowns, there are five distinct digits in "87 85 23".	touchdown scorer
+Adam	How many factors will the jersey number of the first touchdown scorer have?	4 or more	3 or fewer	Pushable if no touchdowns are scored.		factor,touchdown scorer
+Adam	What will be the sum of completed years of NFL experience of all touchdown scorers?	34 or more	33 or less		A player adds their years of experience to this counter every time they score; the counter is assumed to start the game at 0.	completed years of NFL experience,touchdown scorer
+Adam	What proportion of touchdowns will be scored by players whose listed colleges played football in the Pac-12, SEC, or ACC in 2023?	Half or more	Less than half		Half of zero is zero, which means that "Half or more" wins if there are no touchdowns scored.	listed college
+Adam	Will the yardage of the longest made field goal or extra point exceed the yardage of the longest play from scrimmage?	Yes	No		The made kick yardage counter is assumed to start the game at 0.	
+Alison	Will we see the number "87" visible on Taylor Swift's clothing during the game?	Yes	No			game
+Alison	Will we see Taylor Swift holding a drink during the game?	Yes	No		Any beverage counts, even if it's water.	game
+Alison	Will Usher open his halftime performance with "DJ Got Us Fallin' in Love"?	Yes	No		We'll expect there to be a link similar to https://www.setlist.fm/setlist/rihanna/2023/state-farm-stadium-glendale-az-33bd50d1.html.	
+Alison	Will Ludacris perform with Usher during his halftime performance?	Yes	No			
+Alison	Will Usher spell out his full name during his halftime performance?	Yes	No		He does this in "Nice & Slow".	
+Anthony	What will be higher: the number of field goals the Celtics attempt against Heat or the total points scored in the Super Bowl?	Celtics FGA	Super Bowl points	Pushable if the values exactly match.	Picks for this prop must be made before 1pm ET on Sunday.	
+Anthony	During which set of quarters and overtimes will more points be scored?	Odd quarters and OTs	Even quarters and OTs		The first overtime will be considered "odd", the second "even", and so forth.	
+Anthony	How many performers besides Usher will be billed as having been in the halftime performance?	4 or more	3 or fewer		Last year, it was just Rihanna; two years ago, there were five headliners and two special guests.	
+Anthony	Will "Yeah!" be one of the first three songs performed during the halftime performance?	Yes	No		We'll expect there to be a link similar to https://www.setlist.fm/setlist/rihanna/2023/state-farm-stadium-glendale-az-33bd50d1.html.	
+Anthony	Will any BBGPBG proposer have at least two of their props go unselected by everyone?	Yes	No			
+Brett	What will be the combined yardage on all touchdown plays?	74 or more	73 or less		If no touchdowns are scored, the combined yardage is assumed to be 0.	
+Brett	What will be the total number of first downs made?	42 or more	41 or fewer			first downs made
+Brett	What will be the jersey number of the first touchdown scorer?	20 or higher	19 or lower, or no TDs			touchdown scorer
+Brett	How many receiving yards will Kelce and Kittle combine for?	124 or more	123 or fewer			
+Brett	What will be higher: the combined number of sacks and turnovers in the Super Bowl or the goals scored in both Sunday EPL games?	Sacks and turnovers	Goals		Picks for this prop must be made before 9am ET on Sunday.	Sunday EPL games
+Dan	Will the Chiefs have more combined punts and field goal attempts than the 49ers?	Yes	No			
+Dan	Will more touchdowns be scored by players who were 1st or 2nd round draft picks than by all other players?	Yes	No			
+Dan	How many touchbacks will there be?	9 or more	8 or fewer			
+Dan	What will be the total attendance of the Super Bowl?	71,850 or more	71,849 or less			
+Dan	Will a Killers or Taylor Swift song be used as transition-to-commercial music before the second quarter begins during the game?	Yes	No			game
+Darrell	Will Usher wear majority-white-colored sneakers for the entirety of the halftime performance?	Yes	No			
+Darrell	Will "Yeah!" be the final song of the halftime performance?	Yes	No		We'll expect there to be a link similar to https://www.setlist.fm/setlist/rihanna/2023/state-farm-stadium-glendale-az-33bd50d1.html.	
+Darrell	Will Lil Jon appear in person during the halftime performance?	Yes	No			
+Darrell	Will Justin Bieber perform during the halftime performance?	Yes	No			
+Darrell	Will the winning team be ahead at the end of each quarter?	Yes	No		If the score is ever tied at the end of a quarter, this prop resolves to "No".	
+Joe	How many touchbacks will there be?	7 or more	6 or fewer			
+Joe	Will the seconds digit of the game clock be even or odd when the last touchdown is scored?	Even	Odd	Pushable if no touchdowns are scored.		game clock
+Joe	Will there be more combined points scored in the 1st and 4th quarters than the 2nd and 3rd?	Yes	No			
+Joe	Will Kelce and Pacheco have more combined receiving yards than McCaffrey and Kittle?	Yes	No			
+Joe	What will be the combined yardage on all touchdown plays?	74 or more	73 or less		If no touchdowns are scored, the combined yardage is assumed to be 0.	
+Justin	What will be the color of the liquid dumped on the winning head coach?	Orange	Any other color			
+Justin	Will we see a live shot of a shirtless Jason Kelce during the broadcast window?	Yes	No		A replay of Kelce shirtless at the Bills game a few weeks ago does not count.	broadcast window
+Justin	What will be Kelce's combined number of receptions and touchdowns?	7 or more	6 or fewer			
+Justin	How many yards from scrimmage will McCaffrey have?	120 or more	119 or fewer			yards from scrimmage
+Justin	How many passing yards will Mahomes have?	300 or more	299 or fewer			
+Kevin	Which half's last touchdown play will end with less time remaining on the game clock?	First half	Second half	Pushable if the values exactly match or if no touchdowns are scored.	If a touchdown is only scored in one half, this prop resolves in favor of that half's side.	game clock
+Kevin	Which half's last made field goal play will end with less time remaining on the game clock?	First half	Second half	Pushable if the values exactly match or if no field goals are scored.	If a field goal is only scored in one half, this prop resolves in favor of that half's side.	game clock
+Kevin	Which half's last punt play will end with less time remaining on the game clock?	First half	Second half	Pushable if the values exactly match or if there are no punts.	If a punt is only executed in one half, this prop resolves in favor of that half's side.	game clock
+Kevin	Which half's last turnover play will end with less time remaining on the game clock?	First half	Second half	Pushable if the values exactly match or if there are no turnovers.	If a turnover is only committed in one half, this prop resolves in favor of that half's side.	game clock
+Kevin	Which half's last incomplete pass play will end with less time remaining on the game clock?	First half	Second half	Pushable if the values exactly match or if there are no incomplete passes.	If an incomplete pass is only thrown in one half, this prop resolves in favor of that half's side.	game clock
+Nam	Will Bosa, Butker, Karlaftis, Kelce, Kittle, McCaffrey, Moody, or Purdy be named Super Bowl MVP?	Yes	No		In the event that co-MVPs are named, "Yes" resolves as long as the specified players are not outnumbered by unspecified players.	
+Nam	Will any player achieve an octopus?	Yes	No			octopus
+Nam	Which trio of teammates will score more points?	Kelce/Pacheco/Rice	McCaffrey/Samuel/Kittle		A tie goes to the players on the last team to score in the game.	
+Nam	Will the last digit of the losing team's score be a prime number?	Yes	No		The last digit of "0" is "0".	prime number
+Nam	How many fourth-down conversions will there be?	3 or more	2 or fewer			
+Patrick	What will be the best line-score poker hand for either team?	Straight or better	Three-of-a-kind or worse			line-score poker hand
+Patrick	What will be the sum of the digits that comprise the final score?	12 or more	11 or less		For example, a game ending 21-17 results in a sum-of-digits of 2 + 1 + 1 + 7 = 11.	
+Patrick	How many timeouts will go unused?	4 or more	3 or fewer			
+Patrick	Will the final play be a kneel-down?	Yes	No			
+Patrick	What will be the sum of the yardages of the longest rushing and receiving plays for each team (four plays total)?	125 yards or more	124 yards or less			
+Reilly	Will either team's final score be a prime number or a Fibonacci number?	Yes	No			prime number,Fibonacci number
+Reilly	Will a timeout be called by or charged to either team before the game clock reads "5:00" in the second quarter?	Yes	No			game clock
+Reilly	Will any player besides Mahomes or Purdy attempt a pass?	Yes	No			
+Reilly	Will the longest punt be at least 55 yards?	Yes	No, or no punts			
+Reilly	How many failed two-point conversion attempts will there be?	1 or more	None			

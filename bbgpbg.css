@@ -1,0 +1,64 @@
+::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+summary {
+  background-color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.5rem 0;
+  position: sticky;
+  top: 0;
+}
+
+select.who-are-you {
+  font-size: 1.5rem;
+}
+
+input:checked + label {
+  font-weight: bold;
+}
+
+input, label {
+  cursor: pointer;
+}
+
+fieldset {
+  margin: 0 0 2rem 0;
+}
+
+fieldset legend {
+  background-color: #eee;
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
+fieldset section {
+  margin-top: 0.5rem;
+}
+
+fieldset input {
+  margin-top: 0.5rem;
+}
+
+fieldset p {
+  margin-top: 1rem;
+}
+
+fieldset p,
+fieldset dl {
+  font-size: 0.8rem;
+}
+
+fieldset dl dt {
+  font-weight: bold;
+}
+
+fieldset dl dd {
+  margin-left: 1rem;
+}
