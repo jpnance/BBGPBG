@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { readFileSync } from 'node:fs';
 import pug from 'pug';
 import superagent from 'superagent';
