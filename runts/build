@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+year=$(date +%Y)
+
+mkdir -p dist old
+
+# Generate HTML
+node tsv-to-html.mjs > dist/index.html
+
+# Copy assets
+cp assets/bbgpbg.css dist/
+cp assets/bbgpbg.js dist/
+cp assets/favicon.ico dist/
+
+# Archive for posterity
+cp dist/index.html "old/index-${year}.html"
+
+echo "Built dist/index.html and archived to old/index-${year}.html"
