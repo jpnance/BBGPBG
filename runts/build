@@ -13,7 +13,8 @@ const root = join(__dirname, '..');
 
 process.chdir(root);
 
-const year = new Date().getFullYear();
+const { default: config } = await import('../config.js');
+const { year } = config;
 
 // Clean and create directories
 rmSync('dist', { recursive: true, force: true });

@@ -2,8 +2,9 @@ import 'dotenv/config';
 import { readFileSync } from 'node:fs';
 import pug from 'pug';
 import superagent from 'superagent';
+import config from './config.js';
 
-const sheetId = '1NHKaDTNrBk1wmcVqlZhl_catsk2UXyyDHrH6Q1K11OM';
+const { sheetId, year } = config;
 const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
 
 if (!apiKey) {
@@ -60,7 +61,7 @@ function byProposerName(a, b) {
 function groupedPropsToHtml(groupedProps, glossary) {
   const compiledTemplate = pug.compileFile('template.pug');
 
-  return compiledTemplate({ groupedProps, glossary });
+  return compiledTemplate({ groupedProps, glossary, year });
 }
 
 function glossaryEntries(glossary, [term, definition]) {
