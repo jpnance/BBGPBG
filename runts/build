@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execSync } from 'node:child_process';
-import { cpSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -15,7 +15,8 @@ process.chdir(root);
 
 const year = new Date().getFullYear();
 
-// Ensure directories exist
+// Clean and create directories
+rmSync('dist', { recursive: true, force: true });
 mkdirSync('dist', { recursive: true });
 mkdirSync('old', { recursive: true });
 
