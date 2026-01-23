@@ -1,6 +1,0 @@
-slug: props
-domain: props.coinflipper.org
-type: upload
-
-# Directory within the repo to serve
-root: public
