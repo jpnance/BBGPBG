@@ -3,6 +3,6 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-rsync -avz --delete dist/ jpnance@coinflipper.org:apps/bbgpbg/
+rsync -avz --delete dist/ jpnance@coinflipper.org:apps/bbgpbg/public/
 
 echo "Deployed to coinflipper.org"
