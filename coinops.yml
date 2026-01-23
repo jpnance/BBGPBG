@@ -1,0 +1,9 @@
+# coinops.example.yml - Reference template for app configuration
+# Copy to your app repo as coinops.yml and fill in the relevant fields.
+# Ops scripts only read coinops.yml — they never parse .env or other files.
+
+# Required: where nginx routes traffic
+domain: props.coinflipper.org
+
+# App type: node, static, upload, service
+type: upload
