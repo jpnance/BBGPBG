@@ -1,4 +1,4 @@
 export default {
-  year: 2025,
-  sheetId: '1NHKaDTNrBk1wmcVqlZhl_catsk2UXyyDHrH6Q1K11OM'
+  year: 2026,
+  sheetId: '1nQUbeNu8NvsE2r7FuRWUDhVWsjzGXhRmd_T6WuSBj5U'
 };
